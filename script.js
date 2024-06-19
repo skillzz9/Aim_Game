@@ -30,6 +30,8 @@ function game_innit(){
             clearInterval(countDownInterval);
             timerContainer.removeChild(timer);
             document.body.removeChild(timerContainer);
+            document.body.removeChild(backButton);
+            game_start();
 
         }
     }, 1000);
@@ -39,6 +41,7 @@ function game_innit(){
         if(countdown !== 0){
             timerContainer.removeChild(timer);
             document.body.removeChild(timerContainer);
+
         }
         homepage();
     });
@@ -63,4 +66,30 @@ function homepage(){
                 </div>
             `;
     container.innerHTML = originalContent;
+}
+
+function game_start(){
+    const timerGameContainer = document.createElement('div');
+    timerGameContainer.classList.add('timerGameDiv');
+
+    const timerGame = document.createElement('h2');
+    timerGame.classList.add('timerGame');
+    timerGame.textContent = '10'; // Create a new timer element with text content '10'
+
+    timerGameContainer.appendChild(timerGame);
+    document.body.appendChild(timerGameContainer);
+
+    // create a new back button that goes back to the home page (maybe make a function for it)
+    const backButton = document.createElement('button');
+    backButton.textContent = 'Back';
+    backButton.classList.add('back-button');
+    document.body.appendChild(backButton);
+
+    backButton.addEventListener('click', () =>{
+        document.body.removeChild(backButton);
+        timerGameContainer.removeChild(timerGame);
+        document.body.removeChild(timerGameContainer);
+        homepage();
+    });
+
 }
