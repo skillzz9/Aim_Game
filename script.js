@@ -79,6 +79,21 @@ function game_start(){
     timerGameContainer.appendChild(timerGame);
     document.body.appendChild(timerGameContainer);
 
+    let timerGameCountdown = 10;
+    const timerGameCountdownInterval = setInterval(()=>{
+        timerGameCountdown--;
+        if(timerGameCountdown === 0){
+            document.body.removeChild(backButton);
+            clearInterval(timerGameCountdownInterval);
+            timerGameContainer.removeChild(timerGame);
+            document.body.removeChild(timerGameContainer);
+            game_end();
+        }
+
+        timerGame.textContent = timerGameCountdown;
+
+    }, 1000); 
+
     // create a new back button that goes back to the home page (maybe make a function for it)
     const backButton = document.createElement('button');
     backButton.textContent = 'Back';
@@ -92,4 +107,29 @@ function game_start(){
         homepage();
     });
 
+}
+
+function game_end(){
+    const endTextContainer = document.createElement("div");
+    endTextContainer.classList.add('endGameContainer');
+    const endText = document.createElement("h2");
+    endText.classList.add('endGameText');
+    endText.textContent = "Game Over";
+    
+
+
+    endTextContainer.appendChild(endText);
+    document.body.appendChild(endTextContainer);
+
+    const backButton = document.createElement('button');
+    backButton.textContent = 'Back';
+    backButton.classList.add('back-button');
+    document.body.appendChild(backButton);
+
+    backButton.addEventListener('click', () =>{
+        document.body.removeChild(backButton);
+        endTextContainer.removeChild(endText);
+        document.body.removeChild(endTextContainer);
+        homepage();
+    });
 }
