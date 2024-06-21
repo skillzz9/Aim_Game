@@ -179,7 +179,7 @@ function spawn_target(scoreObj, scoreTitle){
     const containerWidth = mainContainer.clientWidth;
     const containerHeight = mainContainer.clientHeight;
 
-    const randomTop = Math.random() * (containerHeight - 400);
+    const randomTop = Math.random() * (containerHeight - 150);
     const randomLeft = Math.random() * (containerWidth - 400);
 
     target.style.position = 'absolute';
