@@ -35,11 +35,12 @@
     height: 300px;
 }
 
+/* all titles in the container have the same styling */
 .minibox h2 {
-    display: flex; /* Use flexbox to align items */
-    align-items: center; /* Center align items vertically */
-    justify-content: center; /* Center align items horizontally */
-    margin-bottom: 20px; /* Optional: Space between h2 and .personalBest */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 
@@ -114,17 +115,18 @@
 .timerGameDiv{
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center; /* Center items horizontally */
+    flex-direction: column; /* Stack items vertically */
     position: fixed;
     top: 20px;
     left: 50%;
-    transform: translateX(-50%); 
-    width: 100%; 
+    transform: translateX(-50%);
+    width: 100%;
     max-width: 200px;
-    height: 50px;
+    height: auto; /* Adjust height to auto to fit content */
     color: #fff;
     font-size: 24px;
-    z-index: 1000; 
+    z-index: 1000;
 }
 
 .timerGame{
@@ -132,22 +134,58 @@
     text-align: center;
     z-index: 1000;
     color: #fff;
+    margin-bottom: 10px; /* Add margin to separate the timer and score */
 }
 
 .endGameContainer{
     display: flex;
-    justify-content: center;
+    position: fixed;
+    flex-direction: column;
     align-items: center;
-    position: fixed; /* Fix position on the viewport */
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    transform: translate(+50%, +50%); /* allign to center */
+    width: 50%;
+    height: 50%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .endGameText{
     font-size: 50px;
     text-align: center;
+    margin-top: 30px;
+    z-index: 1000;
+    color: black;
+}
+
+.score{
+    font-size: 20px;
     z-index: 1000;
     color: #fff;
+    text-align: center;
+    position: relative;
+}
+
+.scoreNumber{
+    font-size: 40px;
+    z-index: 1000;
+    margin-top: 50px;
+    text-align: center;
+    color: black;
+}
+
+.playAgain{
+    border: none;
+    outline: none;
+    background-color: rgb(19, 204, 19);
+    border-radius: 40px;
+    color: #fff;
+    text-align: center;
+    width: 200px;
+    height: 40px;
+    font-size: 30px;
+    margin-top: 20px;
+    cursor: pointer;
 }

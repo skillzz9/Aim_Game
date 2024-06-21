@@ -72,13 +72,23 @@ function game_start(){
     const timerGameContainer = document.createElement('div');
     timerGameContainer.classList.add('timerGameDiv');
 
+    // creating the main timer 
     const timerGame = document.createElement('h2');
     timerGame.classList.add('timerGame');
-    timerGame.textContent = '10'; // Create a new timer element with text content '10'
+    timerGame.textContent = '10';
 
+    // creating the score with the score number that changes every click
+    const scoreTitle = document.createElement('h2');
+    let score = 0;
+    scoreTitle.classList.add('score');
+    scoreTitle.textContent = 'Score: ' + score;
+
+    // appending all the nessecarry things to the container and then adding that to the body
     timerGameContainer.appendChild(timerGame);
+    timerGameContainer.appendChild(scoreTitle);
     document.body.appendChild(timerGameContainer);
 
+    // main timer logic 
     let timerGameCountdown = 10;
     const timerGameCountdownInterval = setInterval(()=>{
         timerGameCountdown--;
@@ -87,7 +97,7 @@ function game_start(){
             clearInterval(timerGameCountdownInterval);
             timerGameContainer.removeChild(timerGame);
             document.body.removeChild(timerGameContainer);
-            game_end();
+            game_end(score);
         }
 
         timerGame.textContent = timerGameCountdown;
@@ -109,17 +119,35 @@ function game_start(){
 
 }
 
-function game_end(){
+function game_end(score){
     const endTextContainer = document.createElement("div");
     endTextContainer.classList.add('endGameContainer');
     const endText = document.createElement("h2");
     endText.classList.add('endGameText');
     endText.textContent = "Game Over";
-    
+
+    const scoreEndText = document.createElement("h2");
+    scoreEndText.classList.add('scoreNumber');
+    scoreEndText.textContent = "Score: " + score;
+
+    const playAgain = document.createElement("button");
+    playAgain.textContent = "Play again";
+    playAgain.classList.add('playAgain');
+
+
 
 
     endTextContainer.appendChild(endText);
+    endTextContainer.appendChild(scoreEndText);
+    endTextContainer.appendChild(playAgain);
     document.body.appendChild(endTextContainer);
+
+    playAgain.addEventListener('click', () =>{
+        document.body.removeChild(backButton);
+        endTextContainer.removeChild(endText);
+        document.body.removeChild(endTextContainer);
+        game_innit();
+    });
 
     const backButton = document.createElement('button');
     backButton.textContent = 'Back';
