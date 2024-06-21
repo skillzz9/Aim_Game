@@ -1,3 +1,6 @@
+const clickSound = new Audio('sounds/gunsound.mp3');
+clickSound.preload = 'auto';
+
 function game_innit(){
     // getting the container element
     const container = document.querySelector('.container');
@@ -196,10 +199,14 @@ function spawn_target(scoreObj, scoreTitle){
     scoreObj.currentTarget = target;
 
     target.addEventListener('click', () => {
+        clickSound.pause(); // Pause if it's playing
+        clickSound.currentTime = 0; // Reset playback to start
+        clickSound.play(); // Play the sound
         scoreObj.score++;
         scoreTitle.textContent = 'Score: ' + scoreObj.score;
         document.body.removeChild(target);
         spawn_target(scoreObj, scoreTitle);
+        
     });
 
 }
