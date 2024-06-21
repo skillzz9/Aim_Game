@@ -78,10 +78,10 @@ function game_start(){
     timerGame.textContent = '10';
 
     // creating the score with the score number that changes every click
+    const scoreObj = { score: 0 }; // Use an object to wrap score
     const scoreTitle = document.createElement('h2');
-    let score = 0;
     scoreTitle.classList.add('score');
-    scoreTitle.textContent = 'Score: ' + score;
+    scoreTitle.textContent = 'Score: ' + scoreObj.score;
 
     // appending all the nessecarry things to the container and then adding that to the body
     timerGameContainer.appendChild(timerGame);
@@ -97,7 +97,7 @@ function game_start(){
             clearInterval(timerGameCountdownInterval);
             timerGameContainer.removeChild(timerGame);
             document.body.removeChild(timerGameContainer);
-            game_end(score);
+            game_end(scoreObj.score);
         }
 
         timerGame.textContent = timerGameCountdown;
@@ -117,6 +117,8 @@ function game_start(){
         homepage();
     });
 
+    spawn_target(scoreObj, scoreTitle);
+
 }
 
 function game_end(score){
@@ -133,9 +135,6 @@ function game_end(score){
     const playAgain = document.createElement("button");
     playAgain.textContent = "Play again";
     playAgain.classList.add('playAgain');
-
-
-
 
     endTextContainer.appendChild(endText);
     endTextContainer.appendChild(scoreEndText);
@@ -160,4 +159,41 @@ function game_end(score){
         document.body.removeChild(endTextContainer);
         homepage();
     });
+}
+
+function spawn_target(scoreObj, scoreTitle){
+    const target = document.createElement('button');
+    const img = document.createElement('img');
+    img.src = 'images/target.png'; // Replace with your image path
+    img.style.width = '50px';
+    img.style.height = '50px';
+
+    target.style.border = 'none'; // Remove border
+    target.style.padding = '0'; // Remove padding
+    target.style.background = 'none'; // Remove background
+
+    target.appendChild(img);
+
+    const mainContainer = document.querySelector('.container');
+
+    const containerWidth = mainContainer.clientWidth;
+    const containerHeight = mainContainer.clientHeight;
+
+    const randomTop = Math.random() * (containerHeight - 400);
+    const randomLeft = Math.random() * (containerWidth - 400);
+
+    target.style.position = 'absolute';
+    target.style.top = randomTop + 'px';
+    target.style.left = randomLeft + 'px';
+
+
+    document.body.appendChild(target);
+
+    target.addEventListener('click', () => {
+        scoreObj.score++;
+        scoreTitle.textContent = 'Score: ' + scoreObj.score;
+        document.body.removeChild(target);
+        spawn_target(scoreObj, scoreTitle);
+    });
+
 }
