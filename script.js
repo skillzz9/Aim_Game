@@ -78,7 +78,7 @@ function game_start(){
     timerGame.textContent = '10';
 
     // creating the score with the score number that changes every click
-    const scoreObj = { score: 0 }; // Use an object to wrap score
+    const scoreObj = { score: 0, currentTarget: null }; // Use an object to wrap score and current target
     const scoreTitle = document.createElement('h2');
     scoreTitle.classList.add('score');
     scoreTitle.textContent = 'Score: ' + scoreObj.score;
@@ -97,6 +97,7 @@ function game_start(){
             clearInterval(timerGameCountdownInterval);
             timerGameContainer.removeChild(timerGame);
             document.body.removeChild(timerGameContainer);
+            document.body.removeChild(scoreObj.currentTarget);
             game_end(scoreObj.score);
         }
 
@@ -114,6 +115,7 @@ function game_start(){
         document.body.removeChild(backButton);
         timerGameContainer.removeChild(timerGame);
         document.body.removeChild(timerGameContainer);
+        document.body.removeChild(scoreObj.currentTarget);
         homepage();
     });
 
@@ -179,7 +181,7 @@ function spawn_target(scoreObj, scoreTitle){
     const containerWidth = mainContainer.clientWidth;
     const containerHeight = mainContainer.clientHeight;
 
-    const randomTop = Math.random() * (containerHeight - 150);
+    const randomTop = Math.random() * (containerHeight);
     const randomLeft = Math.random() * (containerWidth - 400);
 
     target.style.position = 'absolute';
@@ -188,6 +190,7 @@ function spawn_target(scoreObj, scoreTitle){
 
 
     document.body.appendChild(target);
+    scoreObj.currentTarget = target;
 
     target.addEventListener('click', () => {
         scoreObj.score++;
