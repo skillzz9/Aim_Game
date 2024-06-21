@@ -187,6 +187,9 @@ function spawn_target(scoreObj, scoreTitle){
     target.style.position = 'absolute';
     target.style.top = randomTop + 'px';
     target.style.left = randomLeft + 'px';
+    target.style.width = '50px';
+    target.style.height = '50px';
+    target.style.borderRadius = '50%';
 
 
     document.body.appendChild(target);
