@@ -1,6 +1,8 @@
 const clickSound = new Audio('sounds/gunsound.mp3');
 clickSound.preload = 'auto';
 
+let highScore = 0;
+
 function game_innit(){
     // getting the container element
     const container = document.querySelector('.container');
@@ -62,13 +64,16 @@ function homepage(){
                 <div class="minibox">
                     <h2>Personal Best</h2>
                     <div class="personalBest">
-                        <p> 0 <img src="images/target.png" alt="" style="width: 30px; height: 30px;"></p>
+                        <p id="personalBestScore"> 0 <img src="images/target.png" alt="" style="width: 30px; height: 30px;"></p>
                         <button onclick="game_innit()" class="Play">Play</button>
                         <button class="Settings">Settings</button>
                     </div>
                 </div>
             `;
     container.innerHTML = originalContent;
+    updatePersonalBest(highScore);
+
+
 }
 
 function game_start(){
@@ -81,7 +86,7 @@ function game_start(){
     timerGame.textContent = '10';
 
     // creating the score with the score number that changes every click
-    const scoreObj = { score: 0, currentTarget: null }; // Use an object to wrap score and current target
+    const scoreObj = { score: 0, currentTarget: null, previousScore: 0}; // Use an object to wrap score and current target
     const scoreTitle = document.createElement('h2');
     scoreTitle.classList.add('score');
     scoreTitle.textContent = 'Score: ' + scoreObj.score;
@@ -101,7 +106,7 @@ function game_start(){
             timerGameContainer.removeChild(timerGame);
             document.body.removeChild(timerGameContainer);
             document.body.removeChild(scoreObj.currentTarget);
-            game_end(scoreObj.score);
+            game_end(scoreObj);
         }
 
         timerGame.textContent = timerGameCountdown;
@@ -135,7 +140,7 @@ function game_end(score){
 
     const scoreEndText = document.createElement("h2");
     scoreEndText.classList.add('scoreNumber');
-    scoreEndText.textContent = "Score: " + score;
+    scoreEndText.textContent = "Score: " + score.score;
 
     const playAgain = document.createElement("button");
     playAgain.textContent = "Play again";
@@ -164,6 +169,8 @@ function game_end(score){
         document.body.removeChild(endTextContainer);
         homepage();
     });
+
+    checkScore(score);
 }
 
 function spawn_target(scoreObj, scoreTitle){
@@ -209,4 +216,15 @@ function spawn_target(scoreObj, scoreTitle){
         
     });
 
+}
+
+function updatePersonalBest(newScore) {
+    const scoreElement = document.getElementById('personalBestScore');
+    scoreElement.innerHTML = `${newScore} <img src="images/target.png" alt="" style="width: 30px; height: 30px;">`;
+}
+
+function checkScore(score){
+    if(score.score > highScore){
+        highScore = score.score;
+    }
 }
